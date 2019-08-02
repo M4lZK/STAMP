@@ -12,11 +12,14 @@ from util.FileDumpLoad import dump_file, load_file
 from util.Randomer import Randomer
 # the data path.
 
-root_path = '/home/zyf/code'
-project_name = '/STAMP'
+root_path = ''
+project_name = ''
 
 # the pretreatment data path.
 
+
+home_train = 'datas/data/gru_full_train.csv'
+home_test = 'datas/data/gru_test.csv'
 rsc15_train = root_path + project_name +'/datas/data/rsc15_train_full.txt'
 rsc15_test = root_path + project_name +'/datas/data/rsc15_test.txt'
 mid_rsc15_train_data = "rsc15_train.data"
@@ -24,7 +27,7 @@ mid_rsc15_test_data = "rsc15_test.data"
 mid_rsc15_emb_dict = "rsc15_emb_dict.data"
 mid_rsc15_4_emb_dict = "rsc15_4_emb_dict.data"
 mid_rsc15_64_emb_dict = "rsc15_64_emb_dict.data"
-
+home_emb_dict = 'home_emb_dict.data'
 
 cikm16_train = root_path + project_name +'/datas/cikm16/cmki16_train_full.txt'
 cikm16_test = root_path + project_name +'/datas/cikm16/cmki16_test.txt'
@@ -40,6 +43,15 @@ def load_tt_datas(config={}, reload=True):
     if reload:
         print( "reload the datasets.")
         print (config['dataset'])
+
+        if config['dataset'] == 'home':
+            train_data, test_data, item2idx, n_items = load_data_p(home_train, home_test, pro = None)
+            config["n_items"] = n_items-1
+            emb_dict = load_random(item2idx,edim=config['hidden_size'], init_std=config['emb_stddev'])
+            config['pre_embedding'] = emb_dict
+            path = 'datas/mid_data'
+            dump_file([emb_dict, path+home_emb_dict])
+            print("-----")
 
         if config['dataset'] == 'rsc15_4':
             train_data, test_data, item2idx, n_items = load_data_p(

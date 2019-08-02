@@ -29,7 +29,7 @@ def load_data_p(train_file, test_file, pro, pad_idx = 0):
 
 def _load_data(file_path, item2idx, idx_cnt, pro = None, pad_idx=0):
 
-    data = pd.read_csv(file_path, sep='\t', dtype={'ItemId': np.int64})
+    data = pd.read_csv(file_path, dtype={'ItemId': np.int64})
     print("read finish")
     # return
     data.sort_values(['SessionId', 'Time'], inplace=True)  # 按照sessionid和时间升序排列
