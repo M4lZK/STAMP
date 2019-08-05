@@ -297,8 +297,10 @@ def main(options, modelconf="config/model.conf"):
                 print(dataset)
                 if dataset == "cikm16":
                     model.train(sess, train_data, test_data, saver, threshold_acc=config['cikm_threshold_acc'])
-                else:
+                elif dataset == "rsc15":
                     model.train(sess, train_data, test_data, saver, threshold_acc=config['recsys_threshold_acc'])
+                else:
+                    model.train(sess, train_data, test_data, saver)
                 # if dataset == "rsc15":
                 #     model.train(sess, train_data, test_data, saver, threshold_acc=config['recsys_threshold_acc'])
 
